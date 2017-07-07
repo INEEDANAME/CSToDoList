@@ -15,6 +15,7 @@ namespace CSToDoList
         static void Main()
         {
             Console.WriteLine("Hello, World!");
+            Console.WriteLine("Hello, Friends!");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
