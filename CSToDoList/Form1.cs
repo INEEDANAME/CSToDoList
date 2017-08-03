@@ -36,13 +36,13 @@ namespace CSToDoList
         {
             cmd = new SqlCommand();
             string insert = "Insert into Tasks values(@taskName, @personID, @taskDue, @taskReminder, @taskNotes, @taskCategory)";
-            cmd.Parameters.AddWithValue("@taskName", txtbToDoInput.Text);
+            cmd.Parameters.AddWithValue("@taskName", txtToDoInput.Text);
          //   cmd.Parameters.AddWithValue("@personID", txtbToDoInput.Text);
           //  cmd.Parameters.AddWithValue("@taskID", txtbToDoInput.Text);
             cmd.Parameters.AddWithValue("@taskDue", dtDueDate.Value.ToShortDateString());
             cmd.Parameters.AddWithValue("@taskReminder", dtRemindDate.Value.ToShortDateString());
-            cmd.Parameters.AddWithValue("@taskNotes", textBox1.Text);
-      //      cmd.Parameters.AddWithValue("@taskCategory", ); 
+            cmd.Parameters.AddWithValue("@taskNotes", txtTaskNotes.Text);
+            cmd.Parameters.AddWithValue("@taskCategory", lbCategoryList.SelectedItem.ToString() ); 
 
             dbh.insertCommand(cmd);
             
@@ -68,6 +68,12 @@ namespace CSToDoList
 
         private void baseSplitContainer_Panel1_Paint(object sender, PaintEventArgs e)
         {
+
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            lbCategoryList.SelectedIndex = 0;
 
         }
     }

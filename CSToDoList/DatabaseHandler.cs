@@ -16,7 +16,8 @@ namespace CSToDoList
         SqlCommand com = new SqlCommand();
         DataSet ds = new DataSet();
         SqlDataAdapter da = new SqlDataAdapter();
-        SqlDataReader dr = new SqlDataReader();
+        SqlDataReader dr;
+   
 
 
         public void openConnection()
@@ -24,16 +25,7 @@ namespace CSToDoList
             try
             {
                 conn = new SqlConnection();
-                conn.Open();
-
-            //    string query = "SELECT * FROM CategoryTotal";
-
-           //     da = new SqlDataAdapter(query, conn);
-
-         //    SqlCommandBuilder   cmdBuilder = new SqlCommandBuilder(da);
-                ds = new DataSet();
-               
-               
+                conn.Open();             
             }
             catch (SqlException sqlEx)
             {
@@ -164,14 +156,24 @@ namespace CSToDoList
             }
         }
 
-        public void selectData()
+        public void selectData(SqlCommand c)
         {
             try
             {
                 conn = new SqlConnection();
                 conn.Open();
 
-                //    string query = "SELECT * FROM CategoryTotal";
+               
+               dr = new SqlDataReader();
+
+                using(dr = c.ExecuteReader())
+                {
+                    while(dr.Read())
+                    {
+
+                    }
+                }
+
 
                 //     da = new SqlDataAdapter(query, conn);
 
