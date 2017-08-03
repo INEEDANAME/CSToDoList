@@ -7,11 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace CSToDoList
 {
     public partial class MainWindow : Form
     {
+        SqlCommand cmd;
+        DatabaseHandler dbh = new DatabaseHandler();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,7 +34,17 @@ namespace CSToDoList
 
         private void btnAddTodo_Click(object sender, EventArgs e)
         {
-               lbToDoList.Items.Add(txtbToDoInput.Text);
+            cmd = new SqlCommand();
+            string insert = "Insert into Tasks values(@taskName, @personID, @taskDue, @taskReminder, @taskNotes, @taskCategory)";
+            cmd.Parameters.AddWithValue("@taskName", txtbToDoInput.Text);
+         //   cmd.Parameters.AddWithValue("@personID", txtbToDoInput.Text);
+          //  cmd.Parameters.AddWithValue("@taskID", txtbToDoInput.Text);
+            cmd.Parameters.AddWithValue("@taskDue", dtDueDate.Value.ToShortDateString());
+            cmd.Parameters.AddWithValue("@taskReminder", dtRemindDate.Value.ToShortDateString());
+            cmd.Parameters.AddWithValue("@taskNotes", textBox1.Text);
+      //      cmd.Parameters.AddWithValue("@taskCategory", ); 
+
+            dbh.insertCommand(cmd);
             
         }
 

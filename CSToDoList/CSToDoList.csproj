@@ -65,6 +65,7 @@
     <Compile Include="CreateListForm.Designer.cs">
       <DependentUpon>CreateListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseHandler.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

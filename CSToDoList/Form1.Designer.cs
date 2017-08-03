@@ -29,17 +29,18 @@
         private void InitializeComponent()
         {
             this.baseSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.lblNotes = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnRemindDate = new System.Windows.Forms.Button();
+            this.btnAssignTaskDue = new System.Windows.Forms.Button();
             this.btnShowSettings = new System.Windows.Forms.Button();
             this.txtbToDoInput = new System.Windows.Forms.TextBox();
             this.btnAddTodo = new System.Windows.Forms.Button();
             this.todoListHost = new System.Windows.Forms.SplitContainer();
             this.btnNewList = new System.Windows.Forms.Button();
             this.lbToDoList = new System.Windows.Forms.ListBox();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
-            this.btnAssignTaskDue = new System.Windows.Forms.Button();
-            this.btnRemindDate = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.lblNotes = new System.Windows.Forms.Label();
+            this.dtDueDate = new System.Windows.Forms.DateTimePicker();
+            this.dtRemindDate = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.baseSplitContainer)).BeginInit();
             this.baseSplitContainer.Panel1.SuspendLayout();
             this.baseSplitContainer.Panel2.SuspendLayout();
@@ -61,11 +62,12 @@
             // baseSplitContainer.Panel1
             // 
             this.baseSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.baseSplitContainer.Panel1.Controls.Add(this.dtRemindDate);
+            this.baseSplitContainer.Panel1.Controls.Add(this.dtDueDate);
             this.baseSplitContainer.Panel1.Controls.Add(this.lblNotes);
             this.baseSplitContainer.Panel1.Controls.Add(this.textBox1);
             this.baseSplitContainer.Panel1.Controls.Add(this.btnRemindDate);
             this.baseSplitContainer.Panel1.Controls.Add(this.btnAssignTaskDue);
-            this.baseSplitContainer.Panel1.Controls.Add(this.monthCalendar1);
             this.baseSplitContainer.Panel1.Controls.Add(this.btnShowSettings);
             this.baseSplitContainer.Panel1.Controls.Add(this.txtbToDoInput);
             this.baseSplitContainer.Panel1.Controls.Add(this.btnAddTodo);
@@ -75,9 +77,44 @@
             // 
             this.baseSplitContainer.Panel2.Controls.Add(this.todoListHost);
             this.baseSplitContainer.Size = new System.Drawing.Size(832, 543);
-            this.baseSplitContainer.SplitterDistance = 79;
+            this.baseSplitContainer.SplitterDistance = 237;
             this.baseSplitContainer.SplitterWidth = 5;
             this.baseSplitContainer.TabIndex = 0;
+            // 
+            // lblNotes
+            // 
+            this.lblNotes.AutoSize = true;
+            this.lblNotes.Location = new System.Drawing.Point(472, 87);
+            this.lblNotes.Name = "lblNotes";
+            this.lblNotes.Size = new System.Drawing.Size(88, 17);
+            this.lblNotes.TabIndex = 7;
+            this.lblNotes.Text = "Task Notes :";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(472, 110);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(333, 159);
+            this.textBox1.TabIndex = 6;
+            // 
+            // btnRemindDate
+            // 
+            this.btnRemindDate.Location = new System.Drawing.Point(340, 223);
+            this.btnRemindDate.Name = "btnRemindDate";
+            this.btnRemindDate.Size = new System.Drawing.Size(104, 46);
+            this.btnRemindDate.TabIndex = 5;
+            this.btnRemindDate.Text = "Remind Date";
+            this.btnRemindDate.UseVisualStyleBackColor = true;
+            // 
+            // btnAssignTaskDue
+            // 
+            this.btnAssignTaskDue.Location = new System.Drawing.Point(340, 110);
+            this.btnAssignTaskDue.Name = "btnAssignTaskDue";
+            this.btnAssignTaskDue.Size = new System.Drawing.Size(104, 49);
+            this.btnAssignTaskDue.TabIndex = 4;
+            this.btnAssignTaskDue.Text = "Assign Due Date";
+            this.btnAssignTaskDue.UseVisualStyleBackColor = true;
             // 
             // btnShowSettings
             // 
@@ -133,7 +170,7 @@
             // 
             this.todoListHost.Panel2.BackColor = System.Drawing.Color.Gainsboro;
             this.todoListHost.Panel2.Controls.Add(this.lbToDoList);
-            this.todoListHost.Size = new System.Drawing.Size(832, 459);
+            this.todoListHost.Size = new System.Drawing.Size(832, 301);
             this.todoListHost.SplitterDistance = 277;
             this.todoListHost.SplitterWidth = 5;
             this.todoListHost.TabIndex = 0;
@@ -141,7 +178,7 @@
             // btnNewList
             // 
             this.btnNewList.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnNewList.Location = new System.Drawing.Point(0, 436);
+            this.btnNewList.Location = new System.Drawing.Point(0, 278);
             this.btnNewList.Name = "btnNewList";
             this.btnNewList.Size = new System.Drawing.Size(277, 23);
             this.btnNewList.TabIndex = 0;
@@ -158,50 +195,23 @@
             this.lbToDoList.Location = new System.Drawing.Point(0, 0);
             this.lbToDoList.Margin = new System.Windows.Forms.Padding(4);
             this.lbToDoList.Name = "lbToDoList";
-            this.lbToDoList.Size = new System.Drawing.Size(550, 459);
+            this.lbToDoList.Size = new System.Drawing.Size(550, 301);
             this.lbToDoList.TabIndex = 0;
             this.lbToDoList.SelectedIndexChanged += new System.EventHandler(this.lbToDoList_SelectedIndexChanged);
             // 
-            // monthCalendar1
+            // dtDueDate
             // 
-            this.monthCalendar1.Location = new System.Drawing.Point(28, 82);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 3;
+            this.dtDueDate.Location = new System.Drawing.Point(94, 121);
+            this.dtDueDate.Name = "dtDueDate";
+            this.dtDueDate.Size = new System.Drawing.Size(183, 22);
+            this.dtDueDate.TabIndex = 1;
             // 
-            // btnAssignTaskDue
+            // dtRemindDate
             // 
-            this.btnAssignTaskDue.Location = new System.Drawing.Point(340, 110);
-            this.btnAssignTaskDue.Name = "btnAssignTaskDue";
-            this.btnAssignTaskDue.Size = new System.Drawing.Size(104, 49);
-            this.btnAssignTaskDue.TabIndex = 4;
-            this.btnAssignTaskDue.Text = "Assign Due Date";
-            this.btnAssignTaskDue.UseVisualStyleBackColor = true;
-            // 
-            // btnRemindDate
-            // 
-            this.btnRemindDate.Location = new System.Drawing.Point(340, 223);
-            this.btnRemindDate.Name = "btnRemindDate";
-            this.btnRemindDate.Size = new System.Drawing.Size(104, 46);
-            this.btnRemindDate.TabIndex = 5;
-            this.btnRemindDate.Text = "Remind Date";
-            this.btnRemindDate.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(472, 110);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(333, 159);
-            this.textBox1.TabIndex = 6;
-            // 
-            // lblNotes
-            // 
-            this.lblNotes.AutoSize = true;
-            this.lblNotes.Location = new System.Drawing.Point(472, 87);
-            this.lblNotes.Name = "lblNotes";
-            this.lblNotes.Size = new System.Drawing.Size(88, 17);
-            this.lblNotes.TabIndex = 7;
-            this.lblNotes.Text = "Task Notes :";
+            this.dtRemindDate.Location = new System.Drawing.Point(94, 213);
+            this.dtRemindDate.Name = "dtRemindDate";
+            this.dtRemindDate.Size = new System.Drawing.Size(200, 22);
+            this.dtRemindDate.TabIndex = 8;
             // 
             // MainWindow
             // 
@@ -237,11 +247,12 @@
         private System.Windows.Forms.ListBox lbToDoList;
         private System.Windows.Forms.Button btnNewList;
         private System.Windows.Forms.Button btnShowSettings;
-        private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnRemindDate;
         private System.Windows.Forms.Button btnAssignTaskDue;
         private System.Windows.Forms.Label lblNotes;
+        private System.Windows.Forms.DateTimePicker dtRemindDate;
+        private System.Windows.Forms.DateTimePicker dtDueDate;
 
 
 
