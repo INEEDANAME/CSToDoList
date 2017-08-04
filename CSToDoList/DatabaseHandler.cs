@@ -7,6 +7,7 @@ using System.IO;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Windows.Forms;
 
 namespace CSToDoList
 {
@@ -72,7 +73,7 @@ namespace CSToDoList
         {
             try
             {
-                conn = new SqlConnection();
+                conn.ConnectionString = (@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Prince Anand\Documents\Visual Studio 2013\Projects\CSToDoList\CSToDoList\TaskStorage.mdf;Integrated Security=True");
                 conn.Open();
 
                 c.Connection = conn;
@@ -83,13 +84,15 @@ namespace CSToDoList
                 //     da = new SqlDataAdapter(query, conn);
 
                 //    SqlCommandBuilder   cmdBuilder = new SqlCommandBuilder(da);
-                ds = new DataSet();
+
+                MessageBox.Show("inserted successfully");
 
 
             }
             catch (SqlException sqlEx)
             {
 
+                MessageBox.Show(sqlEx.Message);
 
             }
           
@@ -164,7 +167,7 @@ namespace CSToDoList
                 conn.Open();
 
                
-               dr = new SqlDataReader();
+  
 
                 using(dr = c.ExecuteReader())
                 {

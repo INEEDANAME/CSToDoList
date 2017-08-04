@@ -34,18 +34,21 @@ namespace CSToDoList
 
         private void btnAddTodo_Click(object sender, EventArgs e)
         {
-            cmd = new SqlCommand();
-            string insert = "Insert into Tasks values(@taskName, @personID, @taskDue, @taskReminder, @taskNotes, @taskCategory)";
+           
+            string insert = "Insert into Tasks(taskName,taskDue,taskReminder,taskNotes) values(@taskName, @taskDue, @taskReminder, @taskNotes)";
+
+            cmd = new SqlCommand(insert); 
             cmd.Parameters.AddWithValue("@taskName", txtToDoInput.Text);
          //   cmd.Parameters.AddWithValue("@personID", txtbToDoInput.Text);
           //  cmd.Parameters.AddWithValue("@taskID", txtbToDoInput.Text);
             cmd.Parameters.AddWithValue("@taskDue", dtDueDate.Value.ToShortDateString());
             cmd.Parameters.AddWithValue("@taskReminder", dtRemindDate.Value.ToShortDateString());
             cmd.Parameters.AddWithValue("@taskNotes", txtTaskNotes.Text);
-            cmd.Parameters.AddWithValue("@taskCategory", lbCategoryList.SelectedItem.ToString() ); 
+          //  cmd.Parameters.AddWithValue("@taskCategory", lbCategoryList.SelectedItem.ToString() ); 
 
             dbh.insertCommand(cmd);
-            
+            this.tasksBindingSource.ResetBindings(false);
+            this.tasksTableAdapter.Fill(this.taskStorageDataSet.Tasks);
         }
 
         private void btnNewList_Click(object sender, EventArgs e)
@@ -73,7 +76,10 @@ namespace CSToDoList
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            lbCategoryList.SelectedIndex = 0;
+            // TODO: This line of code loads data into the 'taskStorageDataSet.Tasks' table. You can move, or remove it, as needed.
+            this.tasksTableAdapter.Fill(this.taskStorageDataSet.Tasks);
+        
+
 
         }
     }

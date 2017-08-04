@@ -31,10 +31,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.lblName = new System.Windows.Forms.Label();
+            this.txtEmail = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.cbCategory = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnCreateList = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -57,63 +59,83 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.txtName);
+            this.groupBox1.Controls.Add(this.lblName);
+            this.groupBox1.Controls.Add(this.txtEmail);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.cbCategory);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(34, 104);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(406, 142);
+            this.groupBox1.Size = new System.Drawing.Size(406, 173);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Options";
             // 
-            // label2
+            // txtName
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(41, 32);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 17);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Category :";
+            this.txtName.Location = new System.Drawing.Point(132, 32);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(161, 22);
+            this.txtName.TabIndex = 5;
             // 
-            // comboBox1
+            // lblName
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Student",
-            "Co-Worker",
-            "Teacher",
-            "Doctor"});
-            this.comboBox1.Location = new System.Drawing.Point(131, 32);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(161, 24);
-            this.comboBox1.TabIndex = 1;
+            this.lblName.AutoSize = true;
+            this.lblName.Location = new System.Drawing.Point(45, 38);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(53, 17);
+            this.lblName.TabIndex = 4;
+            this.lblName.Text = "Name: ";
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Location = new System.Drawing.Point(130, 123);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(161, 22);
+            this.txtEmail.TabIndex = 3;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(41, 88);
+            this.label3.Location = new System.Drawing.Point(45, 122);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 17);
             this.label3.TabIndex = 2;
             this.label3.Text = "Email : ";
             // 
-            // textBox2
+            // cbCategory
             // 
-            this.textBox2.Location = new System.Drawing.Point(131, 82);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(161, 22);
-            this.textBox2.TabIndex = 3;
+            this.cbCategory.FormattingEnabled = true;
+            this.cbCategory.Items.AddRange(new object[] {
+            "Student",
+            "Co-Worker",
+            "Teacher",
+            "Doctor"});
+            this.cbCategory.Location = new System.Drawing.Point(131, 75);
+            this.cbCategory.Name = "cbCategory";
+            this.cbCategory.Size = new System.Drawing.Size(161, 24);
+            this.cbCategory.TabIndex = 1;
+            this.cbCategory.Text = "Please select a category";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(41, 75);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(73, 17);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Category :";
             // 
             // btnCreateList
             // 
-            this.btnCreateList.Location = new System.Drawing.Point(351, 272);
+            this.btnCreateList.Location = new System.Drawing.Point(351, 298);
             this.btnCreateList.Name = "btnCreateList";
             this.btnCreateList.Size = new System.Drawing.Size(89, 30);
             this.btnCreateList.TabIndex = 3;
             this.btnCreateList.Text = "Create";
             this.btnCreateList.UseVisualStyleBackColor = true;
+            this.btnCreateList.Click += new System.EventHandler(this.btnCreateList_Click);
             // 
             // CreateListForm
             // 
@@ -138,10 +160,12 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbCategory;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCreateList;
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.Label lblName;
     }
 }
