@@ -35,18 +35,12 @@ namespace CSToDoList
         public void insertCommand(SqlCommand c)
         {
             
-                conn.ConnectionString = (@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Dylan\documents\visual studio 2013\Projects\CSToDoList\CSToDoList\TaskStorage.mdf;Integrated Security=True");
+                conn.ConnectionString = (connString);
                 conn.Open();
-
-                SqlTransaction t = conn.BeginTransaction("Transaction");
-
-                
-                c.Connection = conn;
-                c.Transaction = t;
+   
+            //TODO PUT EXCEPTION 
                 c.ExecuteNonQuery();
-                t.Commit();
-               
-                
+                            
                 MessageBox.Show("inserted successfully");
 
 

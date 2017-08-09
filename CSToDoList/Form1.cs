@@ -17,6 +17,8 @@ namespace CSToDoList
         SqlCommand cmd;
         DatabaseHandler dbh = new DatabaseHandler();
 
+        private bool detailsPanelShowing = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -47,15 +49,18 @@ namespace CSToDoList
                 else
                 {
                     //INSERT The List into tasks
-                    string insert = "Insert into Tasks(taskName, taskDue,taskReminder,taskNotes) values(@taskName, @taskDue, @taskReminder, @taskNotes, @listID)";
+                    string insert = "Insert into Tasks(taskName, ListID) values(@taskName, @listID)";
 
                     cmd = new SqlCommand(insert);
+
                     cmd.Parameters.AddWithValue("@taskName", txtToDoInput.Text);
-             
-                    cmd.Parameters.AddWithValue("@taskDue", dtDueDate.Value.ToShortDateString());
-                    cmd.Parameters.AddWithValue("@taskReminder", dtRemindDate.Value.ToShortDateString());
-                    cmd.Parameters.AddWithValue("@taskNotes", txtTaskNotes.Text);
                     cmd.Parameters.AddWithValue("@listID", listID);
+                    //DEPRECATED - Will be configured through the DetailsPanel
+
+                  //  cmd.Parameters.AddWithValue("@taskDue", dtDueDate.Value.ToShortDateString());
+                  //  cmd.Parameters.AddWithValue("@taskReminder", dtRemindDate.Value.ToShortDateString());
+                  //  cmd.Parameters.AddWithValue("@taskNotes", txtTaskNotes.Text);
+                    
 
                     if (lbCategoryList.Items.Count == 0)
                     {
@@ -68,8 +73,7 @@ namespace CSToDoList
 
 
                     dbh.insertCommand(cmd);
-                    this.tasksBindingSource.ResetBindings(false);
-                    this.tasksTableAdapter.Fill(this.taskStorageDataSet.Tasks);
+ 
                 }
 
             }
@@ -79,35 +83,26 @@ namespace CSToDoList
         {
             CreateListForm frm = new CreateListForm();
             frm.Show();
-
-            listsBindingSource.ResetBindings(false);
-
-
         }
 
         private void btnShowSettings_Click(object sender, EventArgs e)
         {
-            if (baseSplitContainer.SplitterDistance == 63)
+            if (!detailsPanelShowing)
             {
                 baseSplitContainer.SplitterDistance = 240;
+                detailsPanelShowing = true;
             }
             else
             {
-                baseSplitContainer.SplitterDistance = 63;
+                baseSplitContainer.SplitterDistance = 65;
+                detailsPanelShowing = false;
             }
         }
 
-        private void baseSplitContainer_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'taskStorageDataSet1.Lists' table. You can move, or remove it, as needed.
-            this.listsTableAdapter.Fill(this.taskStorageDataSet1.Lists);
-            // TODO: This line of code loads data into the 'taskStorageDataSet.Tasks' table. You can move, or remove it, as needed.
-            this.tasksTableAdapter.Fill(this.taskStorageDataSet.Tasks);
+
 
 
 
