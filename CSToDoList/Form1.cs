@@ -27,34 +27,62 @@ namespace CSToDoList
 
         }
 
-        private void txtbToDoInput_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
+      
         private void btnAddTodo_Click(object sender, EventArgs e)
         {
-           
-            string insert = "Insert into Tasks(taskName,taskDue,taskReminder,taskNotes) values(@taskName, @taskDue, @taskReminder, @taskNotes)";
+            txtToDoInput.Text.Trim();
+            if (txtToDoInput.Text.Length == 0)
+            {
+                MessageBox.Show("Todo can not be blank");
+            }
+            else
+            {
+                //Get the Currently selected list
 
-            cmd = new SqlCommand(insert); 
-            cmd.Parameters.AddWithValue("@taskName", txtToDoInput.Text);
-         //   cmd.Parameters.AddWithValue("@personID", txtbToDoInput.Text);
-          //  cmd.Parameters.AddWithValue("@taskID", txtbToDoInput.Text);
-            cmd.Parameters.AddWithValue("@taskDue", dtDueDate.Value.ToShortDateString());
-            cmd.Parameters.AddWithValue("@taskReminder", dtRemindDate.Value.ToShortDateString());
-            cmd.Parameters.AddWithValue("@taskNotes", txtTaskNotes.Text);
-          //  cmd.Parameters.AddWithValue("@taskCategory", lbCategoryList.SelectedItem.ToString() ); 
+                int listID = dbh.getListID(lbCategoryList.SelectedItem.ToString());
+                if (listID == -2 || listID == -1)
+                {
+                    MessageBox.Show("An Error Occured in loading a list ID for insertion of the task");
+                }
+                else
+                {
+                    //INSERT The List into tasks
+                    string insert = "Insert into Tasks(taskName, taskDue,taskReminder,taskNotes) values(@taskName, @taskDue, @taskReminder, @taskNotes, @listID)";
 
-            dbh.insertCommand(cmd);
-            this.tasksBindingSource.ResetBindings(false);
-            this.tasksTableAdapter.Fill(this.taskStorageDataSet.Tasks);
+                    cmd = new SqlCommand(insert);
+                    cmd.Parameters.AddWithValue("@taskName", txtToDoInput.Text);
+             
+                    cmd.Parameters.AddWithValue("@taskDue", dtDueDate.Value.ToShortDateString());
+                    cmd.Parameters.AddWithValue("@taskReminder", dtRemindDate.Value.ToShortDateString());
+                    cmd.Parameters.AddWithValue("@taskNotes", txtTaskNotes.Text);
+                    cmd.Parameters.AddWithValue("@listID", listID);
+
+                    if (lbCategoryList.Items.Count == 0)
+                    {
+                        cmd.Parameters.AddWithValue("@taskCategory", "Default");
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@taskCategory", lbCategoryList.SelectedItem.ToString());
+                    }
+
+
+                    dbh.insertCommand(cmd);
+                    this.tasksBindingSource.ResetBindings(false);
+                    this.tasksTableAdapter.Fill(this.taskStorageDataSet.Tasks);
+                }
+
+            }
         }
 
         private void btnNewList_Click(object sender, EventArgs e)
         {
             CreateListForm frm = new CreateListForm();
             frm.Show();
+
+            listsBindingSource.ResetBindings(false);
+
+
         }
 
         private void btnShowSettings_Click(object sender, EventArgs e)
@@ -76,11 +104,18 @@ namespace CSToDoList
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'taskStorageDataSet1.Lists' table. You can move, or remove it, as needed.
+            this.listsTableAdapter.Fill(this.taskStorageDataSet1.Lists);
             // TODO: This line of code loads data into the 'taskStorageDataSet.Tasks' table. You can move, or remove it, as needed.
             this.tasksTableAdapter.Fill(this.taskStorageDataSet.Tasks);
-        
 
 
+
+        }
+
+        private void ShowTasks(object sender, EventArgs e)
+        {
+         
         }
     }
 }

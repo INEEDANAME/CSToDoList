@@ -13,150 +13,130 @@ namespace CSToDoList
 {
     class DatabaseHandler
     {
-        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Prince Anand\Documents\Visual Studio 2013\Projects\CSToDoList\CSToDoList\TaskStorage.mdf;Integrated Security=True");
-        SqlCommand com = new SqlCommand();
-        DataSet ds = new DataSet();
-        SqlDataAdapter da = new SqlDataAdapter();
-        SqlDataReader dr;
+        private string connString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\TaskStorage.mdf;Integrated Security=True";
+        private SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Dylan\documents\visual studio 2013\Projects\CSToDoList\CSToDoList\TaskStorage.mdf;Integrated Security=True");
+        private SqlCommand com = new SqlCommand();
+        private DataSet ds = new DataSet();
+        private SqlDataAdapter da = new SqlDataAdapter();
+        private SqlDataReader dr;
    
 
 
         public void openConnection()
         {
-            try
-            {
-                conn = new SqlConnection();
-                conn.Open();             
-            }
-            catch (SqlException sqlEx)
-            {
-                
-            }
            
-            finally
-            {
-                conn.Close();
-            }
         }
 
         public void closeConnection()
         {
-            try
-            {
-                conn = new SqlConnection();
-                conn.Open();
-
-                //    string query = "SELECT * FROM CategoryTotal";
-
-                //     da = new SqlDataAdapter(query, conn);
-
-                //    SqlCommandBuilder   cmdBuilder = new SqlCommandBuilder(da);
-                ds = new DataSet();
-
-
-            }
-            catch (SqlException sqlEx)
-            {
-
-            }
-            catch (Exception ex)
-            {
-
-            }
-            finally
-            {
-                conn.Close();
-            }
+           
         }
 
         public void insertCommand(SqlCommand c)
         {
-            try
-            {
-                conn.ConnectionString = (@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Prince Anand\Documents\Visual Studio 2013\Projects\CSToDoList\CSToDoList\TaskStorage.mdf;Integrated Security=True");
+            
+                conn.ConnectionString = (@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Dylan\documents\visual studio 2013\Projects\CSToDoList\CSToDoList\TaskStorage.mdf;Integrated Security=True");
                 conn.Open();
 
+                SqlTransaction t = conn.BeginTransaction("Transaction");
+
+                
                 c.Connection = conn;
+                c.Transaction = t;
                 c.ExecuteNonQuery();
-                refreshData();
-                //    string query = "SELECT * FROM CategoryTotal";
-
-                //     da = new SqlDataAdapter(query, conn);
-
-                //    SqlCommandBuilder   cmdBuilder = new SqlCommandBuilder(da);
-
+                t.Commit();
+               
+                
                 MessageBox.Show("inserted successfully");
 
 
+                conn.Close();
+            
+        }
+
+        public int getListID(string listName)
+        {
+
+            try
+            {
+                conn.ConnectionString = connString;
+                conn.Open();
+
+                string select = "SELECT ListId FROM Lists WHERE ListName = @listname";
+                SqlCommand cmd = new SqlCommand(select, conn);
+                cmd.Parameters.AddWithValue("@listname", int.Parse(listName));
+                dr = cmd.ExecuteReader();
+
+                if(dr.HasRows)
+                {
+                    dr.Read();
+                 return dr.GetInt32(0);
+                }
+                else
+                {
+                 return -2;
+                }
+
             }
             catch (SqlException sqlEx)
             {
-
-                MessageBox.Show(sqlEx.Message);
-
+                Console.WriteLine("An error occured while trying to get a list ID");
             }
-          
-            finally
-            {
-
-                conn.Close();
-            }
+            return -1;
         }
-        public void refreshData()
+
+        public int getPersonID(string personName)
         {
             try
             {
-                conn = new SqlConnection();
+                conn.ConnectionString = connString;
                 conn.Open();
 
-                //    string query = "SELECT * FROM CategoryTotal";
+                string query = "SELECT personID FROM Person WHERE personName = @name";
 
-                //     da = new SqlDataAdapter(query, conn);
+                SqlCommand cmd = new SqlCommand(query,conn);
+                cmd.Parameters.AddWithValue("@name", personName);
+    
 
-                //    SqlCommandBuilder   cmdBuilder = new SqlCommandBuilder(da);
-                ds = new DataSet();
+                dr = cmd.ExecuteReader();
+                
+   
+                if (dr.HasRows)
+                {
+                    dr.Read();
+                    return dr.GetInt32(0);
+                }
+                else
+                {
+                    return -2;
+                }
 
-
-            }
+              
+             }
             catch (SqlException sqlEx)
             {
+                MessageBox.Show(sqlEx.Message);
 
             }
-            catch (Exception ex)
-            {
 
-            }
             finally
             {
                 conn.Close();
+        
             }
+
+            return -1;
+
+        }
+
+        public void refreshData()
+        {
+           
         }
 
         public void updateDatabase()
         {
-            try
-            {
-                conn = new SqlConnection();
-                conn.Open();
-
-                //    string query = "SELECT * FROM CategoryTotal";
-
-                //     da = new SqlDataAdapter(query, conn);
-
-                //    SqlCommandBuilder   cmdBuilder = new SqlCommandBuilder(da);
-                ds = new DataSet();
-
-
-            }
-            catch (SqlException sqlEx)
-            {
-
-            }
-         
-            finally
-            {
-                conn.Close();
-            }
+            
         }
 
         public void selectData(SqlCommand c)

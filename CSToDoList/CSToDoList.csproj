@@ -79,6 +79,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TaskStorageDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="TaskStorageDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TaskStorageDataSet1.xsd</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CreateListForm.resx">
       <DependentUpon>CreateListForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -113,6 +118,17 @@
     </None>
     <None Include="TaskStorageDataSet.xss">
       <DependentUpon>TaskStorageDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="TaskStorageDataSet1.xsc">
+      <DependentUpon>TaskStorageDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="TaskStorageDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TaskStorageDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TaskStorageDataSet1.xss">
+      <DependentUpon>TaskStorageDataSet1.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
