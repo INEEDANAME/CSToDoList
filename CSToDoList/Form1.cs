@@ -72,7 +72,6 @@ namespace CSToDoList
                         cmd.Parameters.AddWithValue("@taskCategory", lbCategoryList.SelectedItem.ToString());
                     }
 
-
                     dbh.insertCommand(cmd);
  
                 }
@@ -85,7 +84,26 @@ namespace CSToDoList
             CreateListForm frm = new CreateListForm();
             frm.Show();
 
-   
+
+            try
+            {
+
+  
+                this.listsTableAdapter.Insert("WORK", "Student");
+                RefreshListDataSet();
+                int num = this.listsTableAdapter.Update(todoDataSet.Lists[0]);
+                MessageBox.Show(num.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Saving failed");
+            }
+        }  
+
+        private void RefreshListDataSet()
+        {
+            this.listsTableAdapter.Fill(this.todoDataSet.Lists);
+            this.tasksTableAdapter.Fill(this.todoDataSet.Tasks);
         }
 
         private void btnShowSettings_Click(object sender, EventArgs e)
@@ -105,10 +123,11 @@ namespace CSToDoList
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'tasksDataSet.Tasks' table. You can move, or remove it, as needed.
-            this.tasksTableAdapter.Fill(this.tasksDataSet.Tasks);
-            // TODO: This line of code loads data into the 'listDataSet.Lists' table. You can move, or remove it, as needed.
-            this.listsTableAdapter.Fill(this.listDataSet.Lists);
+            // TODO: This line of code loads data into the 'todoDataSet.Tasks' table. You can move, or remove it, as needed.
+            this.tasksTableAdapter.Fill(this.todoDataSet.Tasks);
+            // TODO: This line of code loads data into the 'todoDataSet.Lists' table. You can move, or remove it, as needed.
+            this.listsTableAdapter.Fill(this.todoDataSet.Lists);
+   
         }
 
         private void ShowTasks(object sender, EventArgs e)
@@ -118,7 +137,7 @@ namespace CSToDoList
 
         private void lbTasks_SelectedValueChanged(object sender, EventArgs e)
         {
-            dbh.ShowDetails(lbTasks.SelectedValue.ToString());
+           // dbh.ShowDetails(lbTasks.SelectedValue.ToString());
         }
     }
 }

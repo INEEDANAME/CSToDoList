@@ -22,6 +22,7 @@ namespace CSToDoList
             InitializeComponent();
         }
 
+     
         private void btnCreateList_Click(object sender, EventArgs e)
         {
             txtListName.Text.Trim();
@@ -37,12 +38,15 @@ namespace CSToDoList
             else
             {
                 //INSERT LIST
-                string insert = "INSERT INTO Lists(ListName, ListCategory) VALUES(@listName, @listCategory)";
-                cmd = new SqlCommand(insert);
+                 //  string insert = "INSERT INTO Lists(ListName, ListCategory) VALUES(@listName, @listCategory)";
+                //  cmd = new SqlCommand(insert);
 
-                cmd.Parameters.AddWithValue("@listName", txtListName.Text);
-                cmd.Parameters.AddWithValue("@listCategory", cbCategory.Text);
-                dbh.insertCommand(cmd);
+               // cmd.Parameters.AddWithValue("@listName", txtListName.Text);
+               // cmd.Parameters.AddWithValue("@listCategory", cbCategory.Text);
+
+                
+
+              //  dbh.insertCommand(cmd);
 
                 
 
