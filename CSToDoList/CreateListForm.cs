@@ -13,8 +13,6 @@ namespace CSToDoList
 {
     public partial class CreateListForm : Form
     {
-        SqlCommand cmd;
-        DatabaseHandler dbh = new DatabaseHandler();
         private TodoDataSetTableAdapters.ListsTableAdapter listsTableAdapter;
         private TodoDataSet dataset;
 
@@ -47,20 +45,10 @@ namespace CSToDoList
             }
             else
             {
-                //INSERT LIST
-                 //  string insert = "INSERT INTO Lists(ListName, ListCategory) VALUES(@listName, @listCategory)";
-                //  cmd = new SqlCommand(insert);
-
-               // cmd.Parameters.AddWithValue("@listName", txtListName.Text);
-               // cmd.Parameters.AddWithValue("@listCategory", cbCategory.Text);
-
                 this.listsTableAdapter.Insert(txtListName.Text, cbCategory.Text);
                 this.listsTableAdapter.Update(this.dataset.Lists);
-           
-              //  dbh.insertCommand(cmd)
-                this.Close();
 
-                
+                this.Close();
             }
         }
     }

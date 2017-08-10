@@ -168,6 +168,7 @@
             // todoDataSet
             // 
             this.todoDataSet.DataSetName = "TodoDataSet";
+            this.todoDataSet.EnforceConstraints = false;
             this.todoDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // lbTasks
@@ -183,8 +184,7 @@
             this.lbTasks.Size = new System.Drawing.Size(413, 382);
             this.lbTasks.TabIndex = 0;
             this.lbTasks.ValueMember = "taskName";
-            this.lbTasks.SelectedIndexChanged += new System.EventHandler(this.lbToDoList_SelectedIndexChanged);
-            this.lbTasks.SelectedValueChanged += new System.EventHandler(this.lbTasks_SelectedValueChanged);
+            this.lbTasks.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ShowTaskDetails);
             // 
             // tasksBindingSource
             // 

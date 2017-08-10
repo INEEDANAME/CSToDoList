@@ -226,7 +226,7 @@ namespace CSToDoList {
             this.DataSetName = "TodoDataSet";
             this.Prefix = "";
             this.Namespace = "http://tempuri.org/TodoDataSet.xsd";
-            this.EnforceConstraints = true;
+            this.EnforceConstraints = false;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
             this.tableLists = new ListsDataTable();
             base.Tables.Add(this.tableLists);
@@ -1691,12 +1691,17 @@ SELECT taskID, taskName, taskDue, taskReminder, taskNotes, ListId FROM Tasks WHE
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        taskID, taskName, taskDue, taskReminder, taskNotes, ListId\r\nFROM   " +
                 "         Tasks";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT        taskID\r\nFROM            Tasks\r\nWHERE        (taskName = @taskname)";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@taskname", global::System.Data.SqlDbType.VarChar, 100, global::System.Data.ParameterDirection.Input, 0, 0, "taskName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1718,6 +1723,42 @@ SELECT taskID, taskName, taskDue, taskReminder, taskNotes, ListId FROM Tasks WHE
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual TodoDataSet.TasksDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            TodoDataSet.TasksDataTable dataTable = new TodoDataSet.TasksDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByTaskName(TodoDataSet.TasksDataTable dataTable, string taskname) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((taskname == null)) {
+                throw new global::System.ArgumentNullException("taskname");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(taskname));
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual TodoDataSet.TasksDataTable GetDataByTaskName(string taskname) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((taskname == null)) {
+                throw new global::System.ArgumentNullException("taskname");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(taskname));
+            }
             TodoDataSet.TasksDataTable dataTable = new TodoDataSet.TasksDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

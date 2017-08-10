@@ -12,31 +12,26 @@ namespace CSToDoList
 {
     public partial class DetailsPanel : Form
     {
+        private TodoDataSet todoDataSet;
+        private TodoDataSetTableAdapters.TasksTableAdapter tasksTableAdapter;
         private string taskName;
-        private System.Data.SqlTypes.SqlDateTime dueDate;
-        private System.Data.SqlTypes.SqlDateTime reminderDate;
-        private string taskNotes;
-        private DatabaseHandler dbh = new DatabaseHandler();
 
         public DetailsPanel()
         {
             InitializeComponent();
         }
 
-        public DetailsPanel(string taskName, System.Data.SqlTypes.SqlDateTime due, System.Data.SqlTypes.SqlDateTime reminder, string notes)
+   
+        public DetailsPanel(TodoDataSet todoDataSet, TodoDataSetTableAdapters.TasksTableAdapter tasksTableAdapter, string taskname)
         {
-
-            this.taskName = taskName;
-            this.dueDate = due;
-            this.reminderDate = reminder;
-            this.taskNotes = notes;
+            // TODO: Complete member initialization
+            this.todoDataSet = todoDataSet;
+            this.tasksTableAdapter = tasksTableAdapter;
+            this.taskName = taskname;
 
             InitializeComponent();
 
-            this.Name = taskName;
-            this.dtDue.Value = this.dueDate.Value;
-            this.dtReminder.Value = this.reminderDate.Value;
-            this.txtToDoNotes.Text = this.taskNotes;
+            SetInitValues();
         }
 
         private void btnDueDate_Click(object sender, EventArgs e)
@@ -46,7 +41,14 @@ namespace CSToDoList
 
         private void SaveChanges(object sender, FormClosingEventArgs e)
         {
-            dbh.UpdateTaskDetails(this.taskName, this.dtDue.Value, this.dtReminder.Value, this.txtToDoNotes.Text);
+         
+        }
+
+        private void SetInitValues()
+        {
+            DataTable tasks = this.tasksTableAdapter.GetDataByTaskName(this.taskName);
+           
+         //   this.tasksTableAdapter.Insert(txtToDoInput.Text, DateTime.MinValue, DateTime.MinValue, string.Empty, id);
         }
     }
 }

@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.Sql;
 
 namespace CSToDoList
 {
     public partial class MainWindow : Form
     {
-        SqlCommand cmd;
-        DatabaseHandler dbh = new DatabaseHandler();
-
+    
+ 
         private bool detailsPanelShowing = false;
 
         public MainWindow()
@@ -26,7 +26,7 @@ namespace CSToDoList
 
         private void lbToDoList_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+           
         }
 
       
@@ -41,43 +41,17 @@ namespace CSToDoList
             {
                 //Get the Currently selected list
 
-                MessageBox.Show(lbCategoryList.SelectedValue.ToString());
-                int listID = dbh.getListID(lbCategoryList.SelectedValue.ToString());
-                if (listID == -2 || listID == -1)
-                {
-                    MessageBox.Show("An Error Occured in loading a list ID for insertion of the task");
-                }
-                else
-                {
-                    //INSERT The List into tasks
-                    string insert = "Insert into Tasks(taskName, ListID) values(@taskName, @listID)";
+                DataTable listID = this.listsTableAdapter.GetData();
 
-                    cmd = new SqlCommand(insert);
-
-                    cmd.Parameters.AddWithValue("@taskName", txtToDoInput.Text);
-                    cmd.Parameters.AddWithValue("@listID", listID);
-                    //DEPRECATED - Will be configured through the DetailsPanel
-
-                  //  cmd.Parameters.AddWithValue("@taskDue", dtDueDate.Value.ToShortDateString());
-                  //  cmd.Parameters.AddWithValue("@taskReminder", dtRemindDate.Value.ToShortDateString());
-                  //  cmd.Parameters.AddWithValue("@taskNotes", txtTaskNotes.Text);
-                    
-
-                    if (lbCategoryList.Items.Count == 0)
-                    {
-                        cmd.Parameters.AddWithValue("@taskCategory", "Default");
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@taskCategory", lbCategoryList.SelectedItem.ToString());
-                    }
-
-                    dbh.insertCommand(cmd);
- 
+                int index = lbCategoryList.SelectedIndex;
+                int id = listID.Rows[index].Field<int>(0);
+                this.tasksTableAdapter.Insert(txtToDoInput.Text, null, null, string.Empty, id);
+                this.tasksTableAdapter.Update(this.todoDataSet.Tasks);
+                MessageBox.Show("Added succesfully!");
                 }
 
             }
-        }
+       
 
         private void btnNewList_Click(object sender, EventArgs e)
         {
@@ -124,6 +98,12 @@ namespace CSToDoList
         {
             this.listsTableAdapter.Fill(this.todoDataSet.Lists);
             this.tasksTableAdapter.Fill(this.todoDataSet.Tasks);
+        }
+
+        private void ShowTaskDetails(object sender, MouseEventArgs e)
+        {
+            DetailsPanel panel = new DetailsPanel(this.todoDataSet, this.tasksTableAdapter, lbTasks.SelectedValue.ToString());
+            panel.Show();
         }
     }
 }
