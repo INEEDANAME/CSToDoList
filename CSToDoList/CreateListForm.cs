@@ -15,10 +15,20 @@ namespace CSToDoList
     {
         SqlCommand cmd;
         DatabaseHandler dbh = new DatabaseHandler();
+        private TodoDataSetTableAdapters.ListsTableAdapter listsTableAdapter;
+        private TodoDataSet dataset;
 
 
         public CreateListForm()
         {
+            InitializeComponent();
+        }
+
+        public CreateListForm(TodoDataSetTableAdapters.ListsTableAdapter listsTableAdapter, TodoDataSet tdDataSet)
+        {
+            // TODO: Complete member initialization
+            this.listsTableAdapter = listsTableAdapter;
+            this.dataset = tdDataSet;
             InitializeComponent();
         }
 
@@ -44,12 +54,10 @@ namespace CSToDoList
                // cmd.Parameters.AddWithValue("@listName", txtListName.Text);
                // cmd.Parameters.AddWithValue("@listCategory", cbCategory.Text);
 
-                
-
-              //  dbh.insertCommand(cmd);
-
-                
-
+                this.listsTableAdapter.Insert(txtListName.Text, cbCategory.Text);
+                this.listsTableAdapter.Update(this.dataset.Lists);
+           
+              //  dbh.insertCommand(cmd)
                 this.Close();
 
                 

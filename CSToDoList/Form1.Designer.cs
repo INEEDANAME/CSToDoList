@@ -36,11 +36,11 @@
             this.todoListHost = new System.Windows.Forms.SplitContainer();
             this.btnNewList = new System.Windows.Forms.Button();
             this.lbCategoryList = new System.Windows.Forms.ListBox();
-            this.lbTasks = new System.Windows.Forms.ListBox();
-            this.todoDataSet = new CSToDoList.TodoDataSet();
             this.listsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.listsTableAdapter = new CSToDoList.TodoDataSetTableAdapters.ListsTableAdapter();
+            this.todoDataSet = new CSToDoList.TodoDataSet();
+            this.lbTasks = new System.Windows.Forms.ListBox();
             this.tasksBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.listsTableAdapter = new CSToDoList.TodoDataSetTableAdapters.ListsTableAdapter();
             this.tasksTableAdapter = new CSToDoList.TodoDataSetTableAdapters.TasksTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.baseSplitContainer)).BeginInit();
             this.baseSplitContainer.Panel1.SuspendLayout();
@@ -50,8 +50,8 @@
             this.todoListHost.Panel1.SuspendLayout();
             this.todoListHost.Panel2.SuspendLayout();
             this.todoListHost.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.todoDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.listsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.todoDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tasksBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -160,6 +160,16 @@
             this.lbCategoryList.ValueMember = "ListName";
             this.lbCategoryList.SelectedValueChanged += new System.EventHandler(this.ShowTasks);
             // 
+            // listsBindingSource
+            // 
+            this.listsBindingSource.DataMember = "Lists";
+            this.listsBindingSource.DataSource = this.todoDataSet;
+            // 
+            // todoDataSet
+            // 
+            this.todoDataSet.DataSetName = "TodoDataSet";
+            this.todoDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // lbTasks
             // 
             this.lbTasks.DataSource = this.tasksBindingSource;
@@ -176,24 +186,14 @@
             this.lbTasks.SelectedIndexChanged += new System.EventHandler(this.lbToDoList_SelectedIndexChanged);
             this.lbTasks.SelectedValueChanged += new System.EventHandler(this.lbTasks_SelectedValueChanged);
             // 
-            // todoDataSet
-            // 
-            this.todoDataSet.DataSetName = "TodoDataSet";
-            this.todoDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // listsBindingSource
-            // 
-            this.listsBindingSource.DataMember = "Lists";
-            this.listsBindingSource.DataSource = this.todoDataSet;
-            // 
-            // listsTableAdapter
-            // 
-            this.listsTableAdapter.ClearBeforeFill = true;
-            // 
             // tasksBindingSource
             // 
             this.tasksBindingSource.DataMember = "Tasks";
             this.tasksBindingSource.DataSource = this.todoDataSet;
+            // 
+            // listsTableAdapter
+            // 
+            this.listsTableAdapter.ClearBeforeFill = true;
             // 
             // tasksTableAdapter
             // 
@@ -210,6 +210,7 @@
             this.MinimumSize = new System.Drawing.Size(320, 237);
             this.Name = "MainWindow";
             this.Text = "C# To-Do List";
+            this.Activated += new System.EventHandler(this.RefreshDataSet);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.baseSplitContainer.Panel1.ResumeLayout(false);
             this.baseSplitContainer.Panel1.PerformLayout();
@@ -220,8 +221,8 @@
             this.todoListHost.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.todoListHost)).EndInit();
             this.todoListHost.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.todoDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.listsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.todoDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tasksBindingSource)).EndInit();
             this.ResumeLayout(false);
 

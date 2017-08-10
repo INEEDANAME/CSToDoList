@@ -81,30 +81,10 @@ namespace CSToDoList
 
         private void btnNewList_Click(object sender, EventArgs e)
         {
-            CreateListForm frm = new CreateListForm();
+            CreateListForm frm = new CreateListForm(this.listsTableAdapter, this.todoDataSet);
             frm.Show();
-
-
-            try
-            {
-
-  
-                this.listsTableAdapter.Insert("WORK", "Student");
-                RefreshListDataSet();
-                int num = this.listsTableAdapter.Update(todoDataSet.Lists[0]);
-                MessageBox.Show(num.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Saving failed");
-            }
-        }  
-
-        private void RefreshListDataSet()
-        {
-            this.listsTableAdapter.Fill(this.todoDataSet.Lists);
-            this.tasksTableAdapter.Fill(this.todoDataSet.Tasks);
-        }
+ 
+        } 
 
         private void btnShowSettings_Click(object sender, EventArgs e)
         {
@@ -138,6 +118,12 @@ namespace CSToDoList
         private void lbTasks_SelectedValueChanged(object sender, EventArgs e)
         {
            // dbh.ShowDetails(lbTasks.SelectedValue.ToString());
+        }
+
+        private void RefreshDataSet(object sender, EventArgs e)
+        {
+            this.listsTableAdapter.Fill(this.todoDataSet.Lists);
+            this.tasksTableAdapter.Fill(this.todoDataSet.Tasks);
         }
     }
 }
