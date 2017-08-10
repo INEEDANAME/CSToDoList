@@ -13,12 +13,13 @@ namespace CSToDoList
 {
     class DatabaseHandler
     {
-        private string connString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\TaskStorage.mdf;Integrated Security=True";
-        private SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Dylan\documents\visual studio 2013\Projects\CSToDoList\CSToDoList\TaskStorage.mdf;Integrated Security=True");
+        public string connString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Dylan\Documents\Visual Studio 2013\Projects\CSToDoList\CSToDoList\TaskStorage.mdf;Integrated Security=True";
+        private SqlConnection conn;
         private SqlCommand com = new SqlCommand();
         private DataSet ds = new DataSet();
         private SqlDataAdapter da = new SqlDataAdapter();
         private SqlDataReader dr;
+        
    
 
 
@@ -34,11 +35,10 @@ namespace CSToDoList
 
         public void insertCommand(SqlCommand c)
         {
-            
-                conn.ConnectionString = (connString);
+                conn = new SqlConnection(connString);
                 conn.Open();
-   
-            //TODO PUT EXCEPTION 
+                c.Connection = conn;
+
                 c.ExecuteNonQuery();
                             
                 MessageBox.Show("inserted successfully");
@@ -51,19 +51,19 @@ namespace CSToDoList
         public int getListID(string listName)
         {
 
-            try
-            {
-                conn.ConnectionString = connString;
+          
+                conn = new SqlConnection(connString);
                 conn.Open();
 
                 string select = "SELECT ListId FROM Lists WHERE ListName = @listname";
                 SqlCommand cmd = new SqlCommand(select, conn);
-                cmd.Parameters.AddWithValue("@listname", int.Parse(listName));
+                MessageBox.Show(listName);
+                cmd.Parameters.AddWithValue("@listname", listName);
                 dr = cmd.ExecuteReader();
 
                 if(dr.HasRows)
                 {
-                    dr.Read();
+                  dr.Read();
                  return dr.GetInt32(0);
                 }
                 else
@@ -71,12 +71,9 @@ namespace CSToDoList
                  return -2;
                 }
 
-            }
-            catch (SqlException sqlEx)
-            {
-                Console.WriteLine("An error occured while trying to get a list ID");
-            }
-            return -1;
+            
+            
+          
         }
 
         public int getPersonID(string personName)
@@ -98,10 +95,12 @@ namespace CSToDoList
                 if (dr.HasRows)
                 {
                     dr.Read();
+                    conn.Close();
                     return dr.GetInt32(0);
                 }
                 else
                 {
+                    conn.Close();
                     return -2;
                 }
 
@@ -169,5 +168,49 @@ namespace CSToDoList
                 conn.Close();
             }
         }
+
+            public void ShowDetails(string taskname)
+            {
+
+                conn = new SqlConnection(connString);
+                conn.Open();
+
+                string select = "SELECT taskName, taskDue, taskReminder, taskNotes FROM Tasks WHERE taskName = @taskName";
+                SqlCommand cmd = new SqlCommand(select, conn);
+                cmd.Parameters.AddWithValue("@taskName", taskname);
+                using(dr = cmd.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                    {
+
+                        DetailsPanel details = new DetailsPanel(dr.GetString(0), dr.GetSqlDateTime(1), dr.GetSqlDateTime(2), dr.GetString(3));
+                        details.Show();
+                    }
+                    else
+                    {
+                      
+                    }
+                }
+
+
+                conn.Close();
+            }
+
+            internal void UpdateTaskDetails(string taskName, DateTime due, DateTime reminder, string taskNotes)
+            {
+                conn = new SqlConnection(connString);
+                conn.Open();
+
+                string update = "";
+                SqlCommand cmd = new SqlCommand(update, conn);
+
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("inserted successfully");
+
+
+                conn.Close();
+                
+            }
     }
-}
+    }

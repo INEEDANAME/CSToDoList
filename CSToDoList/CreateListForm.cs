@@ -16,6 +16,7 @@ namespace CSToDoList
         SqlCommand cmd;
         DatabaseHandler dbh = new DatabaseHandler();
 
+
         public CreateListForm()
         {
             InitializeComponent();
@@ -38,12 +39,17 @@ namespace CSToDoList
                 //INSERT LIST
                 string insert = "INSERT INTO Lists(ListName, ListCategory) VALUES(@listName, @listCategory)";
                 cmd = new SqlCommand(insert);
+
                 cmd.Parameters.AddWithValue("@listName", txtListName.Text);
                 cmd.Parameters.AddWithValue("@listCategory", cbCategory.Text);
                 dbh.insertCommand(cmd);
+
+                
+
+                this.Close();
+
+                
             }
-
-
         }
     }
 }

@@ -41,7 +41,8 @@ namespace CSToDoList
             {
                 //Get the Currently selected list
 
-                int listID = dbh.getListID(lbCategoryList.SelectedItem.ToString());
+                MessageBox.Show(lbCategoryList.SelectedValue.ToString());
+                int listID = dbh.getListID(lbCategoryList.SelectedValue.ToString());
                 if (listID == -2 || listID == -1)
                 {
                     MessageBox.Show("An Error Occured in loading a list ID for insertion of the task");
@@ -83,6 +84,8 @@ namespace CSToDoList
         {
             CreateListForm frm = new CreateListForm();
             frm.Show();
+
+   
         }
 
         private void btnShowSettings_Click(object sender, EventArgs e)
@@ -94,7 +97,7 @@ namespace CSToDoList
             }
             else
             {
-                baseSplitContainer.SplitterDistance = 65;
+                baseSplitContainer.SplitterDistance = 55;
                 detailsPanelShowing = false;
             }
         }
@@ -102,15 +105,20 @@ namespace CSToDoList
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-
-
-
-
+            // TODO: This line of code loads data into the 'tasksDataSet.Tasks' table. You can move, or remove it, as needed.
+            this.tasksTableAdapter.Fill(this.tasksDataSet.Tasks);
+            // TODO: This line of code loads data into the 'listDataSet.Lists' table. You can move, or remove it, as needed.
+            this.listsTableAdapter.Fill(this.listDataSet.Lists);
         }
 
         private void ShowTasks(object sender, EventArgs e)
         {
-         
+
+        }
+
+        private void lbTasks_SelectedValueChanged(object sender, EventArgs e)
+        {
+            dbh.ShowDetails(lbTasks.SelectedValue.ToString());
         }
     }
 }

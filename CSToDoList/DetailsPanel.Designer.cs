@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.txtToDoNotes = new System.Windows.Forms.TextBox();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtReminder = new System.Windows.Forms.DateTimePicker();
+            this.dtDue = new System.Windows.Forms.DateTimePicker();
             this.btnReminderDate = new System.Windows.Forms.Button();
             this.btnDueDate = new System.Windows.Forms.Button();
             this.lblNotes = new System.Windows.Forms.Label();
@@ -46,19 +46,19 @@
             this.txtToDoNotes.Size = new System.Drawing.Size(362, 144);
             this.txtToDoNotes.TabIndex = 14;
             // 
-            // dateTimePicker2
+            // dtReminder
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(175, 105);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(199, 20);
-            this.dateTimePicker2.TabIndex = 13;
+            this.dtReminder.Location = new System.Drawing.Point(175, 105);
+            this.dtReminder.Name = "dtReminder";
+            this.dtReminder.Size = new System.Drawing.Size(199, 20);
+            this.dtReminder.TabIndex = 13;
             // 
-            // dateTimePicker1
+            // dtDue
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(175, 50);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(199, 20);
-            this.dateTimePicker1.TabIndex = 12;
+            this.dtDue.Location = new System.Drawing.Point(175, 50);
+            this.dtDue.Name = "dtDue";
+            this.dtDue.Size = new System.Drawing.Size(199, 20);
+            this.dtDue.TabIndex = 12;
             // 
             // btnReminderDate
             // 
@@ -96,8 +96,8 @@
             this.ClientSize = new System.Drawing.Size(388, 321);
             this.Controls.Add(this.lblNotes);
             this.Controls.Add(this.txtToDoNotes);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dtReminder);
+            this.Controls.Add(this.dtDue);
             this.Controls.Add(this.btnReminderDate);
             this.Controls.Add(this.btnDueDate);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -106,6 +106,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "To-Do Details: ";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SaveChanges);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -114,8 +115,8 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtToDoNotes;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtReminder;
+        private System.Windows.Forms.DateTimePicker dtDue;
         private System.Windows.Forms.Button btnReminderDate;
         private System.Windows.Forms.Button btnDueDate;
         private System.Windows.Forms.Label lblNotes;
