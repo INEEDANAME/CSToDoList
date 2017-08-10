@@ -39,9 +39,11 @@
             this.listsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.todoDataSet = new CSToDoList.TodoDataSet();
             this.lbTasks = new System.Windows.Forms.ListBox();
+            this.listTasksBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tasksBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.listsTableAdapter = new CSToDoList.TodoDataSetTableAdapters.ListsTableAdapter();
             this.tasksTableAdapter = new CSToDoList.TodoDataSetTableAdapters.TasksTableAdapter();
+            this.listTasksTableAdapter = new CSToDoList.TodoDataSetTableAdapters.ListTasksTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.baseSplitContainer)).BeginInit();
             this.baseSplitContainer.Panel1.SuspendLayout();
             this.baseSplitContainer.Panel2.SuspendLayout();
@@ -52,6 +54,7 @@
             this.todoListHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.todoDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listTasksBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tasksBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -158,7 +161,7 @@
             this.lbCategoryList.Size = new System.Drawing.Size(207, 382);
             this.lbCategoryList.TabIndex = 1;
             this.lbCategoryList.ValueMember = "ListName";
-            this.lbCategoryList.SelectedValueChanged += new System.EventHandler(this.ShowTasks);
+            this.lbCategoryList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ShowTasks);
             // 
             // listsBindingSource
             // 
@@ -173,7 +176,7 @@
             // 
             // lbTasks
             // 
-            this.lbTasks.DataSource = this.tasksBindingSource;
+            this.lbTasks.DataSource = this.listTasksBindingSource;
             this.lbTasks.DisplayMember = "taskName";
             this.lbTasks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbTasks.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -185,6 +188,11 @@
             this.lbTasks.TabIndex = 0;
             this.lbTasks.ValueMember = "taskName";
             this.lbTasks.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ShowTaskDetails);
+            // 
+            // listTasksBindingSource
+            // 
+            this.listTasksBindingSource.DataMember = "ListTasks";
+            this.listTasksBindingSource.DataSource = this.todoDataSet;
             // 
             // tasksBindingSource
             // 
@@ -198,6 +206,10 @@
             // tasksTableAdapter
             // 
             this.tasksTableAdapter.ClearBeforeFill = true;
+            // 
+            // listTasksTableAdapter
+            // 
+            this.listTasksTableAdapter.ClearBeforeFill = true;
             // 
             // MainWindow
             // 
@@ -223,6 +235,7 @@
             this.todoListHost.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.listsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.todoDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listTasksBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tasksBindingSource)).EndInit();
             this.ResumeLayout(false);
 
@@ -243,6 +256,8 @@
         private TodoDataSetTableAdapters.ListsTableAdapter listsTableAdapter;
         private System.Windows.Forms.BindingSource tasksBindingSource;
         private TodoDataSetTableAdapters.TasksTableAdapter tasksTableAdapter;
+        private System.Windows.Forms.BindingSource listTasksBindingSource;
+        private TodoDataSetTableAdapters.ListTasksTableAdapter listTasksTableAdapter;
 
 
 

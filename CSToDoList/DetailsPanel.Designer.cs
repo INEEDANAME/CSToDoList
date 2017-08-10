@@ -43,8 +43,9 @@
             this.txtToDoNotes.Location = new System.Drawing.Point(12, 165);
             this.txtToDoNotes.Multiline = true;
             this.txtToDoNotes.Name = "txtToDoNotes";
-            this.txtToDoNotes.Size = new System.Drawing.Size(362, 144);
+            this.txtToDoNotes.Size = new System.Drawing.Size(360, 144);
             this.txtToDoNotes.TabIndex = 14;
+            this.txtToDoNotes.Leave += new System.EventHandler(this.SetTaskNotes);
             // 
             // dtReminder
             // 
@@ -68,6 +69,7 @@
             this.btnReminderDate.TabIndex = 11;
             this.btnReminderDate.Text = "Reminder Date";
             this.btnReminderDate.UseVisualStyleBackColor = true;
+            this.btnReminderDate.Click += new System.EventHandler(this.btnReminderDate_Click);
             // 
             // btnDueDate
             // 
@@ -93,7 +95,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(388, 321);
+            this.ClientSize = new System.Drawing.Size(384, 321);
             this.Controls.Add(this.lblNotes);
             this.Controls.Add(this.txtToDoNotes);
             this.Controls.Add(this.dtReminder);
@@ -107,6 +109,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "To-Do Details: ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SaveChanges);
+            this.Load += new System.EventHandler(this.DetailsPanel_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

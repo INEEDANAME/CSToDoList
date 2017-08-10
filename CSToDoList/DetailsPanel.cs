@@ -36,7 +36,15 @@ namespace CSToDoList
 
         private void btnDueDate_Click(object sender, EventArgs e)
         {
+           
+            DataTable tasks = this.tasksTableAdapter.GetData();
+            DataRow[] selectedTask = tasks.Select("TaskName ='" + this.taskName + "'");
 
+            selectedTask[0]["taskDue"] = dtDue.Value.ToString();
+            this.tasksTableAdapter.Update(this.todoDataSet.Tasks);
+            this.tasksTableAdapter.Update(selectedTask[0]);
+
+       
         }
 
         private void SaveChanges(object sender, FormClosingEventArgs e)
@@ -46,9 +54,62 @@ namespace CSToDoList
 
         private void SetInitValues()
         {
-            DataTable tasks = this.tasksTableAdapter.GetDataByTaskName(this.taskName);
+            
+            MessageBox.Show("Test");
+            DataTable tasks = this.tasksTableAdapter.GetData();
+            DataRow[] selectedTask = tasks.Select("TaskName ='" + this.taskName + "'");
+
+            if (!(selectedTask[0]["taskDue"].Equals(System.DBNull.Value)))
+            {
+                dtDue.Value = DateTime.Parse(selectedTask[0]["taskDue"].ToString());
+            }
+
+            if (!(selectedTask[0]["taskReminder"].Equals(System.DBNull.Value)))
+            {
+                dtReminder.Value = DateTime.Parse(selectedTask[0]["taskReminder"].ToString());
+            }
+
+            MessageBox.Show((selectedTask[0]["taskNotes"].ToString().Length == 0).ToString());
+
+            if (!(selectedTask[0]["taskNotes"].ToString().Length == 0))
+            {
+                txtToDoNotes.Text = selectedTask[0]["taskNotes"].ToString();
+            }
+
+            
+
+
+        }
+
+        private void btnReminderDate_Click(object sender, EventArgs e)
+        {
+            DataTable tasks = this.tasksTableAdapter.GetData();
+            DataRow[] selectedTask = tasks.Select("TaskName ='" + this.taskName + "'");
+
+            selectedTask[0]["taskReminder"] = dtReminder.Value.ToString();
+            tasks.AcceptChanges();
+            selectedTask[0].AcceptChanges();
+            this.tasksTableAdapter.Update(this.todoDataSet.Tasks);
+
            
-         //   this.tasksTableAdapter.Insert(txtToDoInput.Text, DateTime.MinValue, DateTime.MinValue, string.Empty, id);
+        }
+
+        private void SetTaskNotes(object sender, EventArgs e)
+        {
+            DataTable tasks = this.tasksTableAdapter.GetData();
+            DataRow[] selectedTask = tasks.Select("TaskName ='" + this.taskName + "'");
+
+            selectedTask[0]["taskNotes"] = txtToDoNotes.Text;
+            this.tasksTableAdapter.Update(this.todoDataSet.Tasks);
+            this.tasksTableAdapter.Update(selectedTask[0]);
+           
+
+        }
+
+        private void DetailsPanel_Load(object sender, EventArgs e)
+        {
+        
+
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.Sql;
+using System.Configuration;
 
 namespace CSToDoList
 {
@@ -55,6 +56,7 @@ namespace CSToDoList
 
         private void btnNewList_Click(object sender, EventArgs e)
         {
+            
             CreateListForm frm = new CreateListForm(this.listsTableAdapter, this.todoDataSet);
             frm.Show();
  
@@ -84,10 +86,8 @@ namespace CSToDoList
    
         }
 
-        private void ShowTasks(object sender, EventArgs e)
-        {
+       
 
-        }
 
         private void lbTasks_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -104,6 +104,26 @@ namespace CSToDoList
         {
             DetailsPanel panel = new DetailsPanel(this.todoDataSet, this.tasksTableAdapter, lbTasks.SelectedValue.ToString());
             panel.Show();
+        }
+
+        private void ShowTasks(object sender, MouseEventArgs e)
+        {
+            // int index = lbCategoryList.SelectedIndex;
+            int listID;
+            DataTable lists = this.listsTableAdapter.GetData();
+            DataRow[] selectedList = lists.Select("ListName ='" + this.lbCategoryList.SelectedValue + "'");
+
+            listID = Int32.Parse(selectedList[0]["ListId"].ToString());
+            MessageBox.Show(listID.ToString());
+            
+            SqlDataAdapter da = new SqlDataAdapter("SELECT taskName FROM Tasks WHERE ListId ='" + listID + "'", new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\TaskStorage.mdf;Integrated Security=True;Connect Timeout=30"));
+            DataSet ds = new DataSet("TasksList");
+            da.Fill(ds, "Tasks");
+
+
+            this.tasksBindingSource.DataSource = ds;
+            this.tasksBindingSource.DataMember = "taskName";
+            this.tasksBindingSource.ResetBindings(true);
         }
     }
 }
