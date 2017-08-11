@@ -34,6 +34,8 @@ namespace CSToDoList
                     {
                         this.tasksTableAdapter.Insert(txtToDoInput.Text, null, null, string.Empty, 0);
                         this.tasksTableAdapter.Update(this.todoDataSet.Tasks);
+                        txtToDoInput.Text = string.Empty;
+                        RefreshDataSet(sender, e);
                     }
                     else
                     {
@@ -43,7 +45,8 @@ namespace CSToDoList
                         int index = lbCategoryList.SelectedIndex;
                         int id = listID.Rows[index].Field<int>(0);
                         this.tasksTableAdapter.Insert(txtToDoInput.Text, null, null, string.Empty, id);
-                        this.tasksTableAdapter.Update(this.todoDataSet.Tasks);
+                        txtToDoInput.Text = string.Empty;
+                        RefreshDataSet(sender, e);
                     }
                 }
             }
@@ -62,6 +65,8 @@ namespace CSToDoList
 
         private void btnCompleteTask_Click(object sender, EventArgs e)
         {
+            txtToDoInput.Text = string.Empty;
+
             if (lbTasks.Items.Count == 0)
             {
                 MessageBox.Show("You have no Tasks left to complete! Well done");
@@ -139,6 +144,54 @@ namespace CSToDoList
                 RefreshDataSet(sender, e);
             }
 
+        }
+
+        private void ClearText(object sender, EventArgs e)
+        {
+            txtToDoInput.Text = string.Empty;
+        }
+
+        private void RemoveList(object sender, MouseEventArgs e)
+        {
+            if (lbTasks.Items.Count > 0)
+            {
+                DialogResult ask = MessageBox.Show("Really Remove the List?","Warning", MessageBoxButtons.YesNo);
+                if (ask == DialogResult.Yes)
+                {
+                    try
+                    {
+                        SqlConnection delCon =
+                        new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\TaskStorage.mdf;Integrated Security=True;Connect Timeout=30");
+
+                        SqlCommand cmd = new SqlCommand();
+                        cmd.CommandType = System.Data.CommandType.Text;
+                        cmd.CommandText = "DELETE Lists WHERE ListName = @listname";
+                        cmd.Parameters.AddWithValue("@listname", this.lbCategoryList.SelectedValue.ToString());
+                        cmd.Connection = delCon;
+
+                        delCon.Open();
+                        cmd.ExecuteNonQuery();
+                        delCon.Close();
+
+                        RefreshDataSet(sender, e);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("An error occured when clearing this list!");
+                        Console.WriteLine("ERROR: " + ex.Message.ToString());
+                    }
+
+                }
+
+
+            }
+
+        }
+
+        private void PopulateTextBox(object sender, EventArgs e)
+        {
+            txtToDoInput.Text = lbTasks.SelectedValue.ToString();
         }
     }
 }

@@ -109,6 +109,7 @@
             this.txtToDoInput.Size = new System.Drawing.Size(453, 29);
             this.txtToDoInput.TabIndex = 1;
             this.txtToDoInput.WordWrap = false;
+            this.txtToDoInput.Click += new System.EventHandler(this.ClearText);
             this.txtToDoInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddToDo);
             // 
             // btnAddTodo
@@ -176,6 +177,7 @@
             this.lbCategoryList.Size = new System.Drawing.Size(205, 365);
             this.lbCategoryList.TabIndex = 1;
             this.lbCategoryList.ValueMember = "ListName";
+            this.lbCategoryList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.RemoveList);
             // 
             // listsBindingSource
             // 
@@ -204,6 +206,7 @@
             this.lbTasks.Size = new System.Drawing.Size(411, 372);
             this.lbTasks.TabIndex = 0;
             this.lbTasks.ValueMember = "taskName";
+            this.lbTasks.Click += new System.EventHandler(this.PopulateTextBox);
             this.lbTasks.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ShowTaskDetails);
             // 
             // tasksBindingSource
