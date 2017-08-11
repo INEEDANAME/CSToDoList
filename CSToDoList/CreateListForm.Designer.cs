@@ -50,7 +50,7 @@
             // 
             this.txtListName.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.txtListName.Location = new System.Drawing.Point(92, 30);
-            this.txtListName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtListName.Margin = new System.Windows.Forms.Padding(2);
             this.txtListName.Name = "txtListName";
             this.txtListName.Size = new System.Drawing.Size(238, 20);
             this.txtListName.TabIndex = 1;
@@ -69,7 +69,7 @@
             // btnCreateList
             // 
             this.btnCreateList.Location = new System.Drawing.Point(248, 101);
-            this.btnCreateList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCreateList.Margin = new System.Windows.Forms.Padding(2);
             this.btnCreateList.Name = "btnCreateList";
             this.btnCreateList.Size = new System.Drawing.Size(82, 24);
             this.btnCreateList.TabIndex = 3;
@@ -96,17 +96,24 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(344, 136);
+            this.ClientSize = new System.Drawing.Size(344, 131);
             this.Controls.Add(this.cbCategory);
             this.Controls.Add(this.btnCreateList);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtListName);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(360, 170);
+            this.MinimizeBox = false;
             this.Name = "CreateListForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Create New Task List";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

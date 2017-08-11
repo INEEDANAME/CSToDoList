@@ -77,7 +77,7 @@
             this.btnDueDate.Name = "btnDueDate";
             this.btnDueDate.Size = new System.Drawing.Size(118, 23);
             this.btnDueDate.TabIndex = 10;
-            this.btnDueDate.Text = "Assign Due Date";
+            this.btnDueDate.Text = "Task Due Date";
             this.btnDueDate.UseVisualStyleBackColor = true;
             this.btnDueDate.Click += new System.EventHandler(this.btnDueDate_Click);
             // 
@@ -102,14 +102,18 @@
             this.Controls.Add(this.dtDue);
             this.Controls.Add(this.btnReminderDate);
             this.Controls.Add(this.btnDueDate);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(400, 360);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(400, 360);
             this.Name = "DetailsPanel";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "To-Do Details: ";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SaveChanges);
-            this.Load += new System.EventHandler(this.DetailsPanel_Load);
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

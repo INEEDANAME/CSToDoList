@@ -21,94 +21,101 @@ namespace CSToDoList
             InitializeComponent();
         }
 
-   
         public DetailsPanel(TodoDataSet todoDataSet, TodoDataSetTableAdapters.TasksTableAdapter tasksTableAdapter, string taskname)
         {
-            // TODO: Complete member initialization
             this.todoDataSet = todoDataSet;
             this.tasksTableAdapter = tasksTableAdapter;
             this.taskName = taskname;
 
             InitializeComponent();
-
             SetInitValues();
         }
 
         private void btnDueDate_Click(object sender, EventArgs e)
         {
-           
-            DataTable tasks = this.tasksTableAdapter.GetData();
-            DataRow[] selectedTask = tasks.Select("TaskName ='" + this.taskName + "'");
+            try
+            {
+                DataTable tasks = this.tasksTableAdapter.GetData();
+                DataRow[] selectedTask = tasks.Select("TaskName ='" + this.taskName + "'");
 
-            selectedTask[0]["taskDue"] = dtDue.Value.ToString();
-            this.tasksTableAdapter.Update(this.todoDataSet.Tasks);
-            this.tasksTableAdapter.Update(selectedTask[0]);
-
+                selectedTask[0]["taskDue"] = dtDue.Value.ToString();
+                this.tasksTableAdapter.Update(this.todoDataSet.Tasks);
+                this.tasksTableAdapter.Update(selectedTask[0]);
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Unable to modify task detail, sorry!");
+                Console.WriteLine("DueDateError: " + ex.Message.ToString());
+            }
        
-        }
-
-        private void SaveChanges(object sender, FormClosingEventArgs e)
-        {
-         
         }
 
         private void SetInitValues()
         {
-            
-            MessageBox.Show("Test");
-            DataTable tasks = this.tasksTableAdapter.GetData();
-            DataRow[] selectedTask = tasks.Select("TaskName ='" + this.taskName + "'");
-
-            if (!(selectedTask[0]["taskDue"].Equals(System.DBNull.Value)))
+            try
             {
-                dtDue.Value = DateTime.Parse(selectedTask[0]["taskDue"].ToString());
-            }
+                DataTable tasks = this.tasksTableAdapter.GetData();
+                DataRow[] selectedTask = tasks.Select("TaskName ='" + this.taskName + "'");
 
-            if (!(selectedTask[0]["taskReminder"].Equals(System.DBNull.Value)))
+                if (!(selectedTask[0]["taskDue"].Equals(System.DBNull.Value)))
+                {
+                    dtDue.Value = DateTime.Parse(selectedTask[0]["taskDue"].ToString());
+                }
+
+                if (!(selectedTask[0]["taskReminder"].Equals(System.DBNull.Value)))
+                {
+                    dtReminder.Value = DateTime.Parse(selectedTask[0]["taskReminder"].ToString());
+                }
+
+                if (!(selectedTask[0]["taskNotes"].ToString().Length == 0))
+                {
+                    txtToDoNotes.Text = selectedTask[0]["taskNotes"].ToString();
+                }
+
+            }catch(Exception ex)
             {
-                dtReminder.Value = DateTime.Parse(selectedTask[0]["taskReminder"].ToString());
+                MessageBox.Show("An error occured when loading the task details!");
+                Console.WriteLine("TaskDetailLoad: " + ex.Message.ToString());
+                this.Close();
             }
-
-            MessageBox.Show((selectedTask[0]["taskNotes"].ToString().Length == 0).ToString());
-
-            if (!(selectedTask[0]["taskNotes"].ToString().Length == 0))
-            {
-                txtToDoNotes.Text = selectedTask[0]["taskNotes"].ToString();
-            }
-
-            
-
-
         }
 
         private void btnReminderDate_Click(object sender, EventArgs e)
         {
-            DataTable tasks = this.tasksTableAdapter.GetData();
-            DataRow[] selectedTask = tasks.Select("TaskName ='" + this.taskName + "'");
+            try
+            {
+                DataTable tasks = this.tasksTableAdapter.GetData();
+                DataRow[] selectedTask = tasks.Select("TaskName ='" + this.taskName + "'");
 
-            selectedTask[0]["taskReminder"] = dtReminder.Value.ToString();
-            tasks.AcceptChanges();
-            selectedTask[0].AcceptChanges();
-            this.tasksTableAdapter.Update(this.todoDataSet.Tasks);
-
+                selectedTask[0]["taskReminder"] = dtReminder.Value.ToString();
+                tasks.AcceptChanges();
+                selectedTask[0].AcceptChanges();
+                this.tasksTableAdapter.Update(this.todoDataSet.Tasks);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to save task detail changes. Please try again");
+                Console.WriteLine("ReminderSaveDetail Error:" + ex.Message.ToString());
+            }
            
         }
 
         private void SetTaskNotes(object sender, EventArgs e)
         {
-            DataTable tasks = this.tasksTableAdapter.GetData();
-            DataRow[] selectedTask = tasks.Select("TaskName ='" + this.taskName + "'");
+            try
+            {
+                DataTable tasks = this.tasksTableAdapter.GetData();
+                DataRow[] selectedTask = tasks.Select("TaskName ='" + this.taskName + "'");
 
-            selectedTask[0]["taskNotes"] = txtToDoNotes.Text;
-            this.tasksTableAdapter.Update(this.todoDataSet.Tasks);
-            this.tasksTableAdapter.Update(selectedTask[0]);
-           
+                selectedTask[0]["taskNotes"] = txtToDoNotes.Text;
+                this.tasksTableAdapter.Update(this.todoDataSet.Tasks);
+                this.tasksTableAdapter.Update(selectedTask[0]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to save task detail changes. Please try again");
+                Console.WriteLine("NotesSaveDetail Error:" + ex.Message.ToString());
+            }
 
-        }
-
-        private void DetailsPanel_Load(object sender, EventArgs e)
-        {
-        
 
         }
     }
