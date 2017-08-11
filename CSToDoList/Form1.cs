@@ -155,6 +155,7 @@ namespace CSToDoList
         {
             if (lbTasks.Items.Count > 0)
             {
+                string list = lbCategoryList.SelectedValue.ToString();
                 DialogResult ask = MessageBox.Show("Really Remove the List?","Warning", MessageBoxButtons.YesNo);
                 if (ask == DialogResult.Yes)
                 {
@@ -166,7 +167,7 @@ namespace CSToDoList
                         SqlCommand cmd = new SqlCommand();
                         cmd.CommandType = System.Data.CommandType.Text;
                         cmd.CommandText = "DELETE Lists WHERE ListName = @listname";
-                        cmd.Parameters.AddWithValue("@listname", this.lbCategoryList.SelectedValue.ToString());
+                        cmd.Parameters.AddWithValue("@listname", list);
                         cmd.Connection = delCon;
 
                         delCon.Open();
@@ -191,7 +192,10 @@ namespace CSToDoList
 
         private void PopulateTextBox(object sender, EventArgs e)
         {
-            txtToDoInput.Text = lbTasks.SelectedValue.ToString();
+            if (lbTasks.Items.Count > 0)
+            {
+                txtToDoInput.Text = lbTasks.SelectedValue.ToString();
+            }
         }
     }
 }
